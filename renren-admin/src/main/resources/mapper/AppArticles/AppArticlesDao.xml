@@ -20,10 +20,23 @@
         <result property="url" column="url"/>
     </resultMap>
     <select id="getArticlesList" resultType="io.renren.modules.AppArticles.dto.AppArticlesDTO">
-
           select  * from  app_articles t  where t.type =#{type} order by t.pub_date desc;
+    </select>
 
-
+    <select id="getList" resultType="io.renren.modules.AppArticles.entity.AppArticlesEntity">
+        select * from app_articles where 1=1
+        <if test="title != null and title.trim() != ''">
+            and title like #{title}
+        </if>
+        <if test="type != null and type.trim() != ''">
+            and type = #{type}
+        </if>
+        <if test="startDate != null and startDate.trim() != ''">
+            and pub_date >= #{startDate}
+        </if>
+        <if test="endDate != null and endDate.trim() != ''">
+            <![CDATA[and pub_date <= #{endDate}]]>
+        </if>
 
     </select>
 

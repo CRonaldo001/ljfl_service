@@ -1,6 +1,7 @@
 package io.renren.modules.AppArticles.entity;
 
-import io.swagger.annotations.ApiModelProperty;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.renren.common.utils.DateUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import com.baomidou.mybatisplus.annotation.*;

@@ -1,5 +1,7 @@
 package io.renren.modules.AppArticles.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.renren.common.utils.DateUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -28,6 +30,7 @@ public class AppArticlesDTO implements Serializable {
     private Long tenantCode;
     @ApiModelProperty(value = "创建者")
     private Long creator;
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
     @ApiModelProperty(value = "创建时间")
     private Date createDate;
     @ApiModelProperty(value = "更新者")
@@ -39,6 +42,7 @@ public class AppArticlesDTO implements Serializable {
     @ApiModelProperty(value = "内容")
     private String content;
     @ApiModelProperty(value = "发布时间")
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
     private Date pubDate;
     @ApiModelProperty(value = "阅读次数")
     private Integer readCount;

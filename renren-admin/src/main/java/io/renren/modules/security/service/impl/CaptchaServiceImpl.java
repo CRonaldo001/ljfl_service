@@ -48,8 +48,8 @@ public class CaptchaServiceImpl implements CaptchaService {
 
         //生成验证码
         SpecCaptcha captcha = new SpecCaptcha(150, 40);
-        captcha.setLen(5);
-        captcha.setCharType(Captcha.TYPE_DEFAULT);
+        captcha.setLen(4);
+        captcha.setCharType(Captcha.TYPE_ONLY_NUMBER);
         captcha.out(response.getOutputStream());
 
         //保存到缓存
