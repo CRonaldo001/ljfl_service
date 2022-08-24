@@ -113,4 +113,13 @@ public class AppOrderController {
         ExcelUtils.exportExcelToTarget(response, null, "兑换记录", list, AppOrderExcel.class);
     }
 
+
+    @DeleteMapping("/exchange")
+    @ApiOperation("积分兑换")
+    @LogOperation("积分兑换")
+    @RequiresPermissions("AppOrder:apporder:update")
+    public Result exchange(@RequestParam Long id){
+        return appOrderService.exchange(id);
+    }
+
 }

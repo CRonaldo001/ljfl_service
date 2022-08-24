@@ -83,4 +83,18 @@ public class AppOrderEntity {
 	* 用户id
 	*/
 	private Long userId;
+	/**
+	 * 删除人ID
+	 */
+	private Long deleter;
+
+	/**
+	 * 删除时间
+	 */
+	private Date deletedTime;
+	/**
+	 * 是否删除
+	 */
+	@TableLogic(value = "0", delval = "1")
+	private String deleted;
 }

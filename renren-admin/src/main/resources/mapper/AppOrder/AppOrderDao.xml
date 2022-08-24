@@ -19,12 +19,40 @@
         <result property="totalNamorl" column="total_namorl"/>
         <result property="totalSpecial" column="total_special"/>
         <result property="userId" column="user_id"/>
+        <result property="deleted" column="deleted"/>
+        <result property="deleter" column="deleter"/>
+        <result property="deletedTime" column="deleted_time"/>
     </resultMap>
     <select id="getOrderList" resultType="io.renren.modules.AppOrder.dto.AppOrderDTO">
         select *
         from app_order t
         where t.user_id = #{id}
+        and deleted='0'
         order by t.create_date desc
+    </select>
+    <select id="getList" resultType="io.renren.modules.AppOrder.dto.AppOrderDTO">
+        select u.phone_num userPhone ,u.nick_name userName,
+        t.* from app_order t
+        left join app_user u on u.id=t.user_id
+        where deleted='0'
+        <if test="userName != null and userName.trim() != ''">
+            and u.nick_name like #{userName}
+        </if>
+        <if test="userPhone != null and userPhone.trim() != ''">
+            and u.phone_num like #{userPhone}
+        </if>
+        <if test="status != null and status.trim() != ''">
+            and status = #{status}
+        </if>
+        <if test="startDate != null and startDate.trim() != ''">
+            and t.create_date >= #{startDate}
+        </if>
+        <if test="endDate != null and endDate.trim() != ''">
+            <![CDATA[and t.create_date <= #{endDate}]]>
+        </if>
+        order by t.status,t.update_date desc
+
+
     </select>
 
 </mapper>

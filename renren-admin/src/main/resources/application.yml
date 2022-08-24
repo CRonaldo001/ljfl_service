@@ -90,8 +90,8 @@ mybatis-plus:
     db-config:
       #主键类型
       id-type: ASSIGN_ID
-      logic-delete-value: t
-      logic-not-delete-value: f
+      logic-delete-value: 1
+      logic-not-delete-value: 0
     banner: false
   #原生配置
   configuration:

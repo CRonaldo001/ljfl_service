@@ -18,9 +18,13 @@
         <result property="readCount" column="read_count"/>
         <result property="type" column="type"/>
         <result property="url" column="url"/>
+        <result property="deleted" column="deleted"/>
+        <result property="deleter" column="deleter"/>
+        <result property="deletedTime" column="deleted_time"/>
     </resultMap>
     <select id="getArticlesList" resultType="io.renren.modules.AppArticles.dto.AppArticlesDTO">
-          select  * from  app_articles t  where t.type =#{type} order by t.pub_date desc;
+          select  * from  app_articles t  where t.type =#{type}
+        and deleted='0' order by t.pub_date desc;
     </select>
 
     <select id="getList" resultType="io.renren.modules.AppArticles.entity.AppArticlesEntity">
@@ -37,6 +41,7 @@
         <if test="endDate != null and endDate.trim() != ''">
             <![CDATA[and pub_date <= #{endDate}]]>
         </if>
+        and deleted='0'
 
     </select>
 

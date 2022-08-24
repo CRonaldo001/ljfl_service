@@ -6,6 +6,7 @@ import io.renren.modules.AppOrder.entity.AppOrderEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
 * 兑换记录
@@ -17,4 +18,6 @@ import java.util.List;
 public interface AppOrderDao extends BaseDao<AppOrderEntity> {
 
     List<AppOrderDTO> getOrderList(Long id);
+
+    List<AppOrderDTO> getList(Map<String, Object> params);
 }

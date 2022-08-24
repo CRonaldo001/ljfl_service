@@ -1,5 +1,7 @@
 package io.renren.modules.AppOrder.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.renren.common.utils.DateUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -26,10 +28,12 @@ public class AppOrderDTO implements Serializable {
     private Long tenantCode;
     @ApiModelProperty(value = "创建者")
     private Long creator;
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
     @ApiModelProperty(value = "创建时间")
     private Date createDate;
     @ApiModelProperty(value = "更新者")
     private Long updater;
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
     @ApiModelProperty(value = "更新时间")
     private Date updateDate;
     @ApiModelProperty(value = "订单编号")
@@ -48,5 +52,16 @@ public class AppOrderDTO implements Serializable {
     private Integer totalSpecial;
     @ApiModelProperty(value = "用户id")
     private Long userId;
+    @ApiModelProperty(value = "是否删除")
+    private String deleted;
+    @ApiModelProperty(value = "删除者")
+    private Long deleter;
+    @ApiModelProperty(value = "删除时间")
+    private Date deletedTime;
+
+    @ApiModelProperty(value = "用户名称")
+    private String userName;
+    @ApiModelProperty(value = "用户名称")
+    private String userPhone;
 
 }

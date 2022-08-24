@@ -15,6 +15,7 @@ import io.renren.modules.AppScores.dto.SaveSocresDTO;
 import io.renren.modules.AppScores.dto.ScoresDTO;
 import io.renren.modules.AppScores.entity.AppScoresEntity;
 import io.renren.modules.AppScores.service.AppScoresService;
+import io.renren.modules.common.constant.KxConstants;
 import io.renren.modules.security.user.SecurityUser;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.StringUtils;
@@ -79,7 +80,7 @@ public class AppScoresServiceImpl extends CrudServiceImpl<AppScoresDao, AppScore
         // 添加兑换记录
         AppOrderDTO appOrderDTO = new AppOrderDTO();
         appOrderDTO.setUserId(dto.getUserId());
-        appOrderDTO.setStatus("WDH");
+        appOrderDTO.setStatus(KxConstants.JF_WDH);
         appOrderDTO.setGoodsName(dto.getGoodsName());
         appOrderDTO.setUrl(appGoodsDTO.getUrl());
         appOrderDTO.setTotalNamorl(dto.getTotalNamorl());

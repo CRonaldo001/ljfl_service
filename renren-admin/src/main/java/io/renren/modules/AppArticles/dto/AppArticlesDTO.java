@@ -50,5 +50,11 @@ public class AppArticlesDTO implements Serializable {
     private String type;
     @ApiModelProperty(value = "图片路径")
     private String url;
+    @ApiModelProperty(value = "是否删除")
+    private String deleted;
+    @ApiModelProperty(value = "删除者")
+    private Long deleter;
+    @ApiModelProperty(value = "删除时间")
+    private Date deletedTime;
 
 }

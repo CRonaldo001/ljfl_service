@@ -48,11 +48,6 @@ public class NettyServerListener {
      */
     EventLoopGroup work = new NioEventLoopGroup();
 
-    /**
-     * 通道适配器
-     */
-    @Resource
-    private ServerChannelHandlerAdapter channelHandlerAdapter;
 
     /**
      * NETT服务器配置类
@@ -94,7 +89,7 @@ public class NettyServerListener {
                     // 解码转String，注意调整自己的编码格式GBK、UTF-8
                     pipeline.addLast(new StringEncoder(Charset.forName("GBK")));
                     pipeline.addLast("handler", new IdleStateHandler(120, 0, 0, TimeUnit.SECONDS));
-                    pipeline.addLast(channelHandlerAdapter);
+//                    pipeline.addLast(channelHandlerAdapter);
                 }
             });
             LOGGER.info("netty服务器在[{}]端口启动监听", port);
