@@ -19,6 +19,33 @@
         <result property="classes" column="classes"/>
         <result property="studentNum" column="student_num"/>
         <result property="password" column="password"/>
+        <result property="room" column="room"/>
     </resultMap>
+    <select id="getUserByNum" resultType="io.renren.modules.AppUser.dto.AppUserDTO">
+
+
+        select *
+        from app_user t
+        where t.phone_num = #{phone}
+        <if test="status != null and status.trim() != ''">
+            and t.status =  #{status}
+        </if>
+
+    </select>
+    <select id="getList" resultType="io.renren.modules.AppUser.dto.AppUserDTO">
+
+
+
+        select *
+        from app_user t
+        where  1=1
+        <if test="phoneNum != null and phoneNum.trim() != ''">
+            and t.phone_num like  #{phoneNum}
+        </if>
+
+
+
+
+    </select>
 
 </mapper>

@@ -22,4 +22,10 @@ public interface AppOrderService extends CrudService<AppOrderEntity, AppOrderDTO
     Result exchange(Long id);
 
     PageData<AppOrderDTO> page(Map<String, Object> params);
+
+    List<AppOrderDTO> getExpList(Map<String, Object> params);
+
+    List<AppOrderDTO> getOrderByNO(String outTradeNo);
+
+
 }

@@ -19,5 +19,15 @@ public class KxConstants {
      */
     public static String JF_WDH="WDH";
 
+    /**
+     * 未支付
+     */
+    public static String JF_WZF="WZF";
+
+    /**
+     * 已支付
+     */
+    public static String JF_YZF="YZF";
+
 
 }

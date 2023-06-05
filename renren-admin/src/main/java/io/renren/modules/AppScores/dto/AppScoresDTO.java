@@ -40,4 +40,9 @@ public class AppScoresDTO implements Serializable {
     private Integer specialScore;
     @ApiModelProperty(value = "积分产生类型")
     private String type;
+    @ApiModelProperty(value = "内容")
+    private String comment;
+    @ApiModelProperty(value = "图片")
+    private String url;
+
 }

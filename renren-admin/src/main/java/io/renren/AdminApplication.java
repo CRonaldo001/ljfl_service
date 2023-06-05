@@ -21,11 +21,8 @@ import javax.annotation.Resource;
         org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class
 })
 public class AdminApplication extends SpringBootServletInitializer implements CommandLineRunner {
-
     @Resource
     private NettyServerListener nettyServerListener;
-
-
 
     public static void main(String[] args) {
         SpringApplication.run(AdminApplication.class, args);
@@ -38,6 +35,6 @@ public class AdminApplication extends SpringBootServletInitializer implements Co
 
     @Override
     public void run(String... args) throws Exception {
-       new Thread(() -> nettyServerListener.start()).start();
+//        new Thread(() -> nettyServerListener.start()).start();
     }
 }

@@ -1,5 +1,6 @@
 package io.renren.modules.AppOrder.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import com.baomidou.mybatisplus.annotation.*;
@@ -97,4 +98,13 @@ public class AppOrderEntity {
 	 */
 	@TableLogic(value = "0", delval = "1")
 	private String deleted;
+
+
+	private Double money;
+	private String userPhone;
+	private String  receivedName;
+	private String phone;
+	private String sendType;
+	private String addr;
+	private String outTradeNo;
 }

@@ -20,7 +20,7 @@ netty:
 spring:
   # 环境 dev|test|prod
   profiles:
-    active: dev
+    active: prod
   messages:
     encoding: UTF-8
     basename: i18n/messages
@@ -72,7 +72,7 @@ flowable:
 fdfs:
   so-timeout: 600000
   connect-timeout: 6000
-  tracker-list:            #TrackerList参数,支持多个
+  tracker-list: #TrackerList参数,支持多个
     - 192.168.10.10:22122
 
 # 是否开启redis缓存  true开启   false关闭
@@ -103,3 +103,14 @@ mybatis-plus:
     prefix:
     blobType: BLOB
     boolValue: TRUE
+  #服务器域名地址
+  server.service-domain: http://127.0.0.1:8080
+  
+  #微信app支付
+  pay.wxpay.app.appID: "你的appid"
+  pay.wxpay.app.mchID: "你的商户id"
+  pay.wxpay.app.key: "你的api秘钥，不是appSecret"
+  #从微信商户平台下载的安全证书存放的路径、我放在resources下面,切记一定要看看target目录下的class文件下有没有打包apiclient_cert.p12文件
+  pay.wxpay.app.certPath: static/cert/wxpay/apiclient_cert.p12
+  #微信支付成功的异步通知接口
+  pay.wxpay.app.payNotifyUrl: ${server.service-domain}/api/wxPay/notify

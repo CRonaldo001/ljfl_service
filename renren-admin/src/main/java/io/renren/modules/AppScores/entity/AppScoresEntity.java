@@ -1,5 +1,6 @@
 package io.renren.modules.AppScores.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import com.baomidou.mybatisplus.annotation.*;
@@ -67,4 +68,6 @@ public class AppScoresEntity {
 	 * 积分类型
 	 */
 	private String type;
+	private String comment;
+	private String url;
 }

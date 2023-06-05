@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.AppSign.dao.AppSignDao">
+
+    <resultMap type="io.renren.modules.AppSign.entity.AppSignEntity" id="appSignMap">
+        <result property="id" column="id"/>
+        <result property="remark" column="remark"/>
+        <result property="schoolCode" column="school_code"/>
+        <result property="tenantCode" column="tenant_code"/>
+        <result property="creator" column="creator"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updater" column="updater"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="userId" column="user_id"/>
+    </resultMap>
+    <update id="updateInfo">
+        update app_sign t set t.remark ="true" where t.user_id = #{id}
+
+    </update>
+    <select id="getSign" resultType="io.renren.modules.AppSign.dto.AppSignDTO">
+        SELECT *
+        FROM app_sign t
+        where t.user_id = #{id}
+          and to_days(t.create_date) = to_days(now());
+    </select>
+    <select id="getLast7Sign" resultType="String">
+        SELECT
+            *
+        FROM
+            (
+                SELECT
+                    DATE_FORMAT( t.create_date, '%Y-%m-%d' ) AS 'day'
+                FROM
+                    app_sign t WHERE t.user_id = #{id} and t.remark is null and
+
+                    date ( t.create_date ) >= DATE_SUB( CURDATE(), INTERVAL 7 DAY )
+        GROUP BY
+            DATE_FORMAT( t.create_date, '%Y-%m-%d' )
+            ) z
+        ORDER BY
+            z.DAY ASC
+
+    </select>
+
+</mapper>

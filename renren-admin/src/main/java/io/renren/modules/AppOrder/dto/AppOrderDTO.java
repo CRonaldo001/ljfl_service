@@ -58,10 +58,17 @@ public class AppOrderDTO implements Serializable {
     private Long deleter;
     @ApiModelProperty(value = "删除时间")
     private Date deletedTime;
-
-    @ApiModelProperty(value = "用户名称")
-    private String userName;
-    @ApiModelProperty(value = "用户名称")
+    @ApiModelProperty(value = "金额")
+    private Double money;
+    @ApiModelProperty(value = "兑换人")
+    private String receivedName;
+    @ApiModelProperty(value = "电话号码")
     private String userPhone;
+    @ApiModelProperty(value = "提货方式")
+    private String sendType;
+    @ApiModelProperty(value = "地址")
+    private String addr;
+    @ApiModelProperty(value = "微信支付订单编号")
+    private String outTradeNo;
 
 }

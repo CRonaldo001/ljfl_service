@@ -19,9 +19,30 @@
         <result property="saleCount" column="sale_count"/>
         <result property="name" column="name"/>
         <result property="url" column="url"/>
+        <result property="type" column="type"/>
+        <result property="isTop" column="is_top"/>
     </resultMap>
     <select id="getGoodsList" resultType="io.renren.modules.AppGoods.dto.AppGoodsDTO">
-        select  * from  app_goods
+        select *
+        from app_goods where  type  =#{type}
+
+        <if test="goodsName != null and goodsName.trim() != ''">
+            and name like #{goodsName}
+        </if>
+
+        <if test="goodsType != null and goodsType.trim() != ''">
+            and goods_type =#{goodsType}
+        </if>
+
+
+        order by  is_top desc,create_date desc;
+    </select>
+    <select id="getList" resultType="io.renren.modules.AppGoods.entity.AppGoodsEntity">
+
+        select * from app_goods t where 1=1
+        <if test="name != null and name.trim() != ''">
+            and name like #{name}
+        </if>
     </select>
 
 </mapper>

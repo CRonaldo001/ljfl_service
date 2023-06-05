@@ -1,5 +1,6 @@
 package io.renren.modules.AppUser.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import com.baomidou.mybatisplus.annotation.*;
@@ -63,6 +64,12 @@ public class AppUserEntity {
 	* 手机号码
 	*/
 	private String phoneNum;
+
+	/**
+	 * 对方邀请电话
+	 */
+	private String inviteNum;
+
 	/**
 	* 学校名称
 	*/
@@ -79,6 +86,18 @@ public class AppUserEntity {
 	* 班級
 	*/
 	private String studentNum;
+	/**
+	 * 寝室
+	 */
+	private String room;
+
+	private String status;//t:正常  f ：注销
 
 	private String password;
+	private Long schoolId;
+	private Long buildId;
+	private Long collegeId;
+	private String sex;
+	private String buildName;
+	private String collegeName;
 }

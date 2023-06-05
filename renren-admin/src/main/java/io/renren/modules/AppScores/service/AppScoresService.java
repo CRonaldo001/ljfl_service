@@ -23,4 +23,9 @@ public interface AppScoresService extends CrudService<AppScoresEntity, AppScores
     ScoresDTO getMaxScores(Long id);
 
 
+    List<AppScoresDTO> getReadList(Long id , String type);
+
+    List<AppScoresDTO> getListBytype(Long id, String type);
+
+
 }

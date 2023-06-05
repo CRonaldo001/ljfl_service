@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +35,7 @@ import java.util.Map;
 * @since 3.0 2022-08-13
 */
 @RestController
-@RequestMapping("api/")
+@RequestMapping("AppGoods/appgoods")
 @Api(tags="商品管理")
 public class AppGoodsController {
     @Autowired
@@ -80,7 +81,7 @@ public class AppGoodsController {
     public Result save(@RequestBody AppGoodsDTO dto){
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
-
+        dto.setSaleCount(0);
         appGoodsService.save(dto);
 
         return new Result();
@@ -93,7 +94,7 @@ public class AppGoodsController {
     public Result update(@RequestBody AppGoodsDTO dto){
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
-
+        dto.setUpdateDate(new Date());
         appGoodsService.update(dto);
 
         return new Result();

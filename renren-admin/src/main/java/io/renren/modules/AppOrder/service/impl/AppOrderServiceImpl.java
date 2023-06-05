@@ -26,7 +26,7 @@ import java.util.Map;
 /**
  * 文章管理
  *
- * @author WEI 
+ * @author WEI
  * @since 3.0 2022-08-17
  */
 @Service
@@ -34,7 +34,7 @@ import java.util.Map;
 public class AppOrderServiceImpl extends CrudServiceImpl<AppOrderDao, AppOrderEntity, AppOrderDTO> implements AppOrderService {
 
     @Override
-    public QueryWrapper<AppOrderEntity> getWrapper(Map<String, Object> params){
+    public QueryWrapper<AppOrderEntity> getWrapper(Map<String, Object> params) {
         QueryWrapper<AppOrderEntity> wrapper = new QueryWrapper<>();
 //        wrapper.eq("tenant_code", TenantContext.getTenantCode(SecurityUser.getUser()));
         return wrapper;
@@ -48,15 +48,15 @@ public class AppOrderServiceImpl extends CrudServiceImpl<AppOrderDao, AppOrderEn
 
     @Override
     public Result exchange(Long id) {
-        AppOrderDTO appOrderDTO= this.get(id);
-        if(null != appOrderDTO){
+        AppOrderDTO appOrderDTO = this.get(id);
+        if (null != appOrderDTO) {
             appOrderDTO.setStatus(KxConstants.JF_YDH);
             appOrderDTO.setUpdater(TenantContext.getTenantCode(SecurityUser.getUser()));
             appOrderDTO.setUpdateDate(new Date());
             this.update(appOrderDTO);
             return new Result();
-        }else {
-            log.error("兑换失败，id ",id);
+        } else {
+            log.error("兑换失败，id ", id);
             return new Result().error("兑换失败，请联系管理员！");
         }
 
@@ -72,6 +72,20 @@ public class AppOrderServiceImpl extends CrudServiceImpl<AppOrderDao, AppOrderEn
         //查询
         List<AppOrderDTO> list = baseDao.getList(params);
 
-        return  new PageData<>(list, page.getTotal());
+        return new PageData<>(list, page.getTotal());
+    }
+
+    @Override
+    public List<AppOrderDTO> getExpList(Map<String, Object> params) {
+
+        List<AppOrderDTO> list = baseDao.getExpList(params);
+
+        return list;
+    }
+
+    @Override
+    public List<AppOrderDTO> getOrderByNO(String outTradeNo) {
+        return baseDao.getOrderByNO(outTradeNo);
+
     }
 }

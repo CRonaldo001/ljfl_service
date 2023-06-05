@@ -6,18 +6,24 @@ import io.renren.modules.AppScores.dto.ScoresDTO;
 import io.renren.modules.AppScores.entity.AppScoresEntity;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.sql.SQLType;
 import java.util.List;
 
 /**
-* 积分记录
-*
-* @author WEI 
-* @since 3.0 2022-08-13
-*/
+ * 积分记录
+ *
+ * @author WEI
+ * @since 3.0 2022-08-13
+ */
 @Mapper
 public interface AppScoresDao extends BaseDao<AppScoresEntity> {
     ScoresDTO getScores(Long id);
-    List<AppScoresDTO> getScoresList (Long id);
+
+    List<AppScoresDTO> getScoresList(Long id);
 
     ScoresDTO getMaxScores(Long id);
+    ScoresDTO getMaxSpecialScores(Long id);
+
+    List<AppScoresDTO> getReadList(Long id, String type);
+    List<AppScoresDTO> getListByList(Long id,String type);
 }

@@ -3,9 +3,12 @@ spring:
     druid:
       #MySQL
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://192.168.0.4:3306/ljfl?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+      url: jdbc:mysql://1.14.63.104:3306/ljfl_test?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
       username: root
-      password: kxkj999
+      password: kxkj888
+#      url: jdbc:mysql://192.168.0.4:3306/ljfl?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+#      username: root
+#      password: kxkj999
 #      #Oracle
 #      driver-class-name: oracle.jdbc.OracleDriver
 #      url: jdbc:oracle:thin:@localhost:1521:xe

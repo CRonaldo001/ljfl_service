@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.AppVersion.dao.AppVersionDao">
+
+    <resultMap type="io.renren.modules.AppVersion.entity.AppVersionEntity" id="appVersionMap">
+        <result property="id" column="id"/>
+        <result property="remark" column="remark"/>
+        <result property="tenantCode" column="tenant_code"/>
+        <result property="creator" column="creator"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updater" column="updater"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="appid" column="appid"/>
+        <result property="contents" column="contents"/>
+        <result property="isMandatory" column="is_mandatory"/>
+        <result property="isSilently" column="is_silently"/>
+        <result property="name" column="name"/>
+        <result property="paltform" column="paltform"/>
+        <result property="stablePublish" column="stable_publish"/>
+        <result property="title" column="title"/>
+        <result property="type" column="type"/>
+        <result property="url" column="url"/>
+        <result property="version" column="version"/>
+    </resultMap>
+    <select id="getList" resultType="io.renren.modules.AppVersion.dto.AppVersionDTO">
+        select *
+        from app_version t
+        where t.paltform = #{paltform}
+        order by t.create_date desc
+
+
+    </select>
+
+</mapper>

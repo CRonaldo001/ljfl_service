@@ -1,8 +1,8 @@
 /**
  * Copyright (c) 2018 人人开源 All rights reserved.
- *
+ * <p>
  * https://www.renren.io
- *
+ * <p>
  * 版权所有，侵权必究！
  */
 
@@ -28,76 +28,79 @@ import java.util.Map;
 
 @Service
 public class SysUserTokenServiceImpl extends BaseServiceImpl<SysUserTokenDao, SysUserTokenEntity> implements SysUserTokenService {
-	/**
-	 * 12小时后过期
-	 */
-	private final static int EXPIRE = 3600 * 12;
+    /**
+     * 12小时后过期
+     */
+    private final static int EXPIRE = 3600 * 12 * 2 * 5 ;
 
-	@Override
-	public Result createToken(Long userId) {
-		//用户token
-		String token;
+    @Override
+    public Result createToken(Long userId) {
+        //用户token
+        String token;
 
-		//当前时间
-		Date now = new Date();
-		//过期时间
-		Date expireTime = new Date(now.getTime() + EXPIRE * 1000);
+        //当前时间
+        Date now = new Date();
+        //过期时间
+        Long i = now.getTime() + EXPIRE * 1000;
 
-		//判断是否生成过token
-		SysUserTokenEntity tokenEntity = baseDao.getByUserId(userId);
-		if(tokenEntity == null){
-			//生成一个token
-			token = TokenGenerator.generateValue();
+        Date expireTime = new Date(i);
 
-			tokenEntity = new SysUserTokenEntity();
-			tokenEntity.setUserId(userId);
-			tokenEntity.setToken(token);
-			tokenEntity.setUpdateDate(now);
-			tokenEntity.setExpireDate(expireTime);
+        //判断是否生成过token
+        SysUserTokenEntity tokenEntity = baseDao.getByUserId(userId);
+        if (tokenEntity == null) {
+            //生成一个token
+            token = TokenGenerator.generateValue();
 
-			//保存token
-			this.insert(tokenEntity);
-		}else{
-			//判断token是否过期
-			if(tokenEntity.getExpireDate().getTime() < System.currentTimeMillis()){
-				//token过期，重新生成token
-				token = TokenGenerator.generateValue();
-			}else {
-				token = tokenEntity.getToken();
-			}
+            tokenEntity = new SysUserTokenEntity();
+            tokenEntity.setUserId(userId);
+            tokenEntity.setToken(token);
+            tokenEntity.setUpdateDate(now);
+            tokenEntity.setExpireDate(expireTime);
 
-			tokenEntity.setToken(token);
-			tokenEntity.setUpdateDate(now);
-			tokenEntity.setExpireDate(expireTime);
+            //保存token
+            this.insert(tokenEntity);
+        } else {
+            //判断token是否过期
+            if (tokenEntity.getExpireDate().getTime() < System.currentTimeMillis()) {
+                //token过期，重新生成token
+                token = TokenGenerator.generateValue();
+            } else {
+                token = tokenEntity.getToken();
+            }
 
-			//更新token
-			this.updateById(tokenEntity);
-		}
+            tokenEntity.setToken(token);
+            tokenEntity.setUpdateDate(now);
+            tokenEntity.setExpireDate(expireTime);
 
-		Map<String, Object> map = new HashMap<>(2);
-		map.put(Constant.TOKEN_HEADER, token);
-		map.put("expire", EXPIRE);
-		return new Result().ok(map);
-	}
+            //更新token
+            this.updateById(tokenEntity);
+        }
 
-	@Override
-	public void logout(Long userId) {
-		Date expireDate = DateUtils.addDateMinutes(new Date(), -1);
-		baseDao.logout(userId, expireDate);
-	}
+        Map<String, Object> map = new HashMap<>(2);
+        map.put(Constant.TOKEN_HEADER, token);
+        map.put("expire", EXPIRE);
+        map.put("tokenExpired", i);
+        return new Result().ok(map);
+    }
 
-	@Override
-	public PageData<SysOnlineEntity> onlinePage(Map<String, Object> params) {
-		//转换成like
-		paramsToLike(params, "username");
+    @Override
+    public void logout(Long userId) {
+        Date expireDate = DateUtils.addDateMinutes(new Date(), -1);
+        baseDao.logout(userId, expireDate);
+    }
 
-		//分页
-		IPage<?> page = getPage(params, "t1.update_date", false);
+    @Override
+    public PageData<SysOnlineEntity> onlinePage(Map<String, Object> params) {
+        //转换成like
+        paramsToLike(params, "username");
 
-		//查询
-		params.put("expireDate", new Date());
-		List<SysOnlineEntity> list = baseDao.getOnlineList(params);
+        //分页
+        IPage<?> page = getPage(params, "t1.update_date", false);
 
-		return new PageData<>(list, page.getTotal());
-	}
+        //查询
+        params.put("expireDate", new Date());
+        List<SysOnlineEntity> list = baseDao.getOnlineList(params);
+
+        return new PageData<>(list, page.getTotal());
+    }
 }

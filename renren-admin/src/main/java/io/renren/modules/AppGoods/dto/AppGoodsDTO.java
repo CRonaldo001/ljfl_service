@@ -20,8 +20,7 @@ public class AppGoodsDTO implements Serializable {
 
     @ApiModelProperty(value = "id")
     private Long id;
-    @ApiModelProperty(value = "备注")
-    private String remark;
+
     @ApiModelProperty(value = "学校编号")
     private Long schoolCode;
     @ApiModelProperty(value = "租户编码")
@@ -48,5 +47,16 @@ public class AppGoodsDTO implements Serializable {
     private String name;
     @ApiModelProperty(value = "图片路径")
     private String url;
+    private String type;
+    private String isTop;
+    private String goodsType;//商品类型
+    private Integer thresholdPrice;//门槛积分
+    private String content;// 内容
+    private Long schoolId;
+    @ApiModelProperty(value = "备注")
+    private String remark;
+
+
+
 
 }

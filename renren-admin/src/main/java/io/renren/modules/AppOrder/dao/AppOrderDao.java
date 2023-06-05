@@ -20,4 +20,11 @@ public interface AppOrderDao extends BaseDao<AppOrderEntity> {
     List<AppOrderDTO> getOrderList(Long id);
 
     List<AppOrderDTO> getList(Map<String, Object> params);
+
+    List<AppOrderDTO> getExpList(Map<String, Object> params);
+
+
+    List<AppOrderDTO> getOrderByNO(String outTradeNo);
+
+
 }

@@ -70,6 +70,9 @@ public class ShiroConfig {
         filterMap.put("/doc.html", "anon");
         filterMap.put("/swagger-resources/**", "anon");
 
+        filterMap.put("/AppSchool/appschool/getListSchool", "anon");
+
+
 
         filterMap.put("/modeler/**", "anon");
         filterMap.put("/flowable/**", "anon");

@@ -22,6 +22,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -67,15 +69,23 @@ public class AppScoresServiceImpl extends CrudServiceImpl<AppScoresDao, AppScore
             }
         }
         ScoresDTO scores = getScores(dto.getUserId());
-        if (scores.getNormalScore() < dto.getTotalNamorl() || scores.getSpecialScore() < dto.getTotalSpecial()) {
+
+        if (scores.getNormalScore() + scores.getSpecialScore() < dto.getTotalNamorl()) {
             return new Result<String>().error("很遗憾！积分不够啦!!!");
         }
         // 添加积分记录
         AppScoresDTO appScoresDTO = new AppScoresDTO();
         appScoresDTO.setUserId(dto.getUserId());
-        appScoresDTO.setNormalScore(-dto.getTotalNamorl()); //减少 -
-        appScoresDTO.setSpecialScore(-dto.getTotalSpecial());
+        if (scores.getSpecialScore() < dto.getTotalNamorl()) {
+            appScoresDTO.setSpecialScore(-scores.getSpecialScore());
+            appScoresDTO.setNormalScore(scores.getSpecialScore() - dto.getTotalNamorl()); //减少 -
+        } else {
+            appScoresDTO.setSpecialScore(-dto.getTotalNamorl());
+            appScoresDTO.setNormalScore(-0); //减少
+        }
         appScoresDTO.setType("DH");// 兑换
+        appScoresDTO.setComment("商品兑换");
+        appScoresDTO.setUrl(appGoodsDTO.getUrl());
         this.save(appScoresDTO);
         // 添加兑换记录
         AppOrderDTO appOrderDTO = new AppOrderDTO();
@@ -86,6 +96,8 @@ public class AppScoresServiceImpl extends CrudServiceImpl<AppScoresDao, AppScore
         appOrderDTO.setTotalNamorl(dto.getTotalNamorl());
         appOrderDTO.setTotalSpecial(dto.getTotalSpecial());
         appOrderDTO.setGoodsCount(dto.getGoodsCount());
+        appOrderDTO.setTransactionId(generateWord());
+        appOrderDTO.setUpdateDate(null);
         appOrderService.save(appOrderDTO);
         //减少存存 增加销售量
         appGoodsDTO.setRemainCount(appGoodsDTO.getRemainCount() - dto.getGoodsCount());
@@ -94,6 +106,22 @@ public class AppScoresServiceImpl extends CrudServiceImpl<AppScoresDao, AppScore
         return new Result<String>().ok("成功，已生成兑换订单！");
     }
 
+
+    private String generateWord() {
+        String[] beforeShuffle = new String[]{"2", "3", "4", "5", "6", "7",
+                "8", "9", "0", "1"};
+        List list = Arrays.asList(beforeShuffle);
+        Collections.shuffle(list);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            sb.append(list.get(i));
+        }
+        String afterShuffle = sb.toString();
+        String result = afterShuffle.substring(5, 9);
+        return result;
+    }
+
+
     @Override
     public List<AppScoresDTO> getScoreList(Long id) {
         return this.baseDao.getScoresList(id);
@@ -101,6 +129,22 @@ public class AppScoresServiceImpl extends CrudServiceImpl<AppScoresDao, AppScore
 
     @Override
     public ScoresDTO getMaxScores(Long id) {
-        return this.baseDao.getMaxScores(id);
+
+        ScoresDTO maxScores = this.baseDao.getMaxScores(id);
+        ScoresDTO maxSpecialScores = this.baseDao.getMaxSpecialScores(id);
+        maxScores.setSpecialScore(maxSpecialScores.getSpecialScore());
+        return maxScores;
+    }
+
+    @Override
+    public List<AppScoresDTO> getReadList(Long id, String type) {
+        return this.baseDao.getReadList(id, type);
+    }
+
+    @Override
+    public List<AppScoresDTO> getListBytype(Long id, String type) {
+
+
+        return this.baseDao.getListByList(id, type);
     }
 }

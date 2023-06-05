@@ -1,5 +1,8 @@
 package io.renren.modules.AppUser.dto;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -26,10 +29,12 @@ public class AppUserDTO implements Serializable {
     private Long tenantCode;
     @ApiModelProperty(value = "创建者")
     private Long creator;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     @ApiModelProperty(value = "创建时间")
     private Date createDate;
     @ApiModelProperty(value = "更新者")
     private Long updater;
+
     @ApiModelProperty(value = "更新时间")
     private Date updateDate;
     @ApiModelProperty(value = "人员类型")
@@ -38,6 +43,11 @@ public class AppUserDTO implements Serializable {
     private String nickName;
     @ApiModelProperty(value = "手机号码")
     private String phoneNum;
+
+
+    @ApiModelProperty(value = "对方邀请手机号码")
+    private String inviteNum;
+
     @ApiModelProperty(value = "学校名称")
     private String schoolName;
     @ApiModelProperty(value = "专业")
@@ -48,7 +58,16 @@ public class AppUserDTO implements Serializable {
     private String studentNum;
     @ApiModelProperty(value = "密码")
     private String password;
+    @ApiModelProperty(value = "寝室")
+    private String room;
     @ApiModelProperty(value = "验证码")
     private String code;
-
+    @ApiModelProperty(value = "状态")
+    private String status;
+    private Long schoolId;
+    private Long buildId;
+    private Long collegeId;
+    private String sex;
+    private String buildName;
+    private String collegeName;
 }

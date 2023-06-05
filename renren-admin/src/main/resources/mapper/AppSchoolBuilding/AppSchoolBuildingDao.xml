@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.AppSchoolBuilding.dao.AppSchoolBuildingDao">
+
+    <resultMap type="io.renren.modules.AppSchoolBuilding.entity.AppSchoolBuildingEntity" id="appSchoolBuildingMap">
+        <result property="id" column="id"/>
+        <result property="tenantCode" column="tenant_code"/>
+        <result property="creator" column="creator"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updater" column="updater"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="schoolId" column="school_id"/>
+        <result property="buildingName" column="Building_name"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    <select id="getListBySchoolId" resultType="io.renren.modules.AppSchoolBuilding.dto.AppSchoolBuildingDTO">
+        select * from app_school_building where 1=1
+        <if test="schoolId != null and schoolId.trim() != ''">
+            and t.school_id = #{schoolId}
+        </if>
+
+
+    </select>
+
+</mapper>

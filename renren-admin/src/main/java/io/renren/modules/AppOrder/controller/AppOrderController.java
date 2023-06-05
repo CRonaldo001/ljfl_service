@@ -108,7 +108,7 @@ public class AppOrderController {
     @LogOperation("导出")
     @RequiresPermissions("AppOrder:apporder:export")
     public void export(@ApiIgnore @RequestParam Map<String, Object> params, HttpServletResponse response) throws Exception {
-        List<AppOrderDTO> list = appOrderService.list(params);
+        List<AppOrderDTO> list = appOrderService.getExpList(params);
 
         ExcelUtils.exportExcelToTarget(response, null, "兑换记录", list, AppOrderExcel.class);
     }

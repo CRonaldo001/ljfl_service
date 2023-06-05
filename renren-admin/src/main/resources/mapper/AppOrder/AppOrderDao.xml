@@ -23,6 +23,32 @@
         <result property="deleter" column="deleter"/>
         <result property="deletedTime" column="deleted_time"/>
     </resultMap>
+    <select id="getExpList" resultType="io.renren.modules.AppOrder.dto.AppOrderDTO">
+        select u.phone_num userPhone ,u.nick_name userName,
+        t.goods_name,t.goods_count,t.create_date,t.update_date,t.transaction_id,IF(t.status='WDH','未兑换','已兑换')  'status' from app_order t
+        left join app_user u on u.id=t.user_id
+        where deleted='0'
+        <if test="userName != null and userName.trim() != ''">
+            and u.nick_name like #{userName}
+        </if>
+        <if test="userPhone != null and userPhone.trim() != ''">
+            and u.phone_num like #{userPhone}
+        </if>
+        <if test="status != null and status.trim() != ''">
+            and status = #{status}
+        </if>
+        <if test="startDate != null and startDate.trim() != ''">
+            and t.create_date >= #{startDate}
+        </if>
+        <if test="endDate != null and endDate.trim() != ''">
+            <![CDATA[and t.create_date <= #{endDate}]]>
+        </if>
+        order by t.status,t.create_date desc
+
+
+    </select>
+
+
     <select id="getOrderList" resultType="io.renren.modules.AppOrder.dto.AppOrderDTO">
         select *
         from app_order t
@@ -51,8 +77,11 @@
             <![CDATA[and t.create_date <= #{endDate}]]>
         </if>
         order by t.status,t.update_date desc
-
+    </select>
+    <select id="getOrderByNO" resultType="io.renren.modules.AppOrder.dto.AppOrderDTO">
+         select  t.* from  app_order t where t.out_trade_no = #{outTradeNo}
 
     </select>
+
 
 </mapper>

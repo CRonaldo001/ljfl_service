@@ -83,4 +83,12 @@ public class AppGoodsEntity {
 	* 图片路径
 	*/
 	private String url;
+	private String type;
+	private String isTop;
+	private String goodsType;
+	private Integer thresholdPrice;
+	private String content;
+	private Long schoolId;
+
+
 }
