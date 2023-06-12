@@ -34,7 +34,12 @@ public class AppOrderExcel {
     private String status;
     @ExcelProperty(value = "下单时间", index = 6)
     private Date createDate;
-    @ExcelProperty(value = "兑换时间", index = 7)
-    private Date updateDate;
+    //    @ExcelProperty(value = "兑换时间", index = 7)
+//    private Date updateDate;
+    @ExcelProperty(value = "送货方式", index = 7)
+    private String sendType;
+    @ExcelProperty(value = "收货地址", index = 8)
+    private String addr;
+
 
 }

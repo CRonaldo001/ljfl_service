@@ -43,18 +43,20 @@ public class WxPayServiceImpl implements WxPayService {
 
         try {
             JSONObject jsonObject = new JSONObject();
-            AppGoodsDTO dto = appGoodsService.get(goodsId);
+            AppGoodsDTO appGoodsDTO = appGoodsService.get(goodsId);
             // 添加兑换记录
             AppOrderDTO appOrderDTO = new AppOrderDTO();
             appOrderDTO.setUserId(userId);
             appOrderDTO.setStatus(KxConstants.JF_WZF);
-            appOrderDTO.setGoodsName(dto.getName());
-            if (StringUtil.isNotEmpty(dto.getUrl())) {
-                String[] split = dto.getUrl().split(";");
+            appOrderDTO.setGoodsName(appGoodsDTO.getName());
+            if (StringUtil.isNotEmpty(appGoodsDTO.getUrl())) {
+                String[] split = appGoodsDTO.getUrl().split(";");
                 if (split != null) {
                     appOrderDTO.setUrl(split[0]);
                 }
             }
+
+            appOrderDTO.setCreator(goodsId);//临时使用
             appOrderDTO.setTotalNamorl(totalNamorl);
             appOrderDTO.setTotalSpecial(totalSpecial);
             appOrderDTO.setGoodsCount(goodsSum);
@@ -70,6 +72,8 @@ public class WxPayServiceImpl implements WxPayService {
                 noncestr = RandomStringUtils.randomAlphanumeric(32).toLowerCase().toUpperCase();
                 appOrderDTO.setOutTradeNo(noncestr);
             } else {
+
+
                 appOrderDTO.setStatus(KxConstants.JF_WDH);
                 // 添加积分记录
                 AppScoresDTO appScoresDTO = new AppScoresDTO();
@@ -78,14 +82,20 @@ public class WxPayServiceImpl implements WxPayService {
                 appScoresDTO.setNormalScore(-totalNamorl); //减少
                 appScoresDTO.setType("DH");// 兑换
                 appScoresDTO.setComment("商品兑换");
-                if (StringUtil.isNotEmpty(dto.getUrl())) {
-                    String[] split = dto.getUrl().split(";");
+                if (StringUtil.isNotEmpty(appGoodsDTO.getUrl())) {
+                    String[] split = appGoodsDTO.getUrl().split(";");
                     if (split != null) {
                         appScoresDTO.setUrl(split[0]);
                     }
                 }
-                appScoresDTO.setUrl(dto.getUrl());
+                appScoresDTO.setUrl(appGoodsDTO.getUrl());
                 appScoresService.save(appScoresDTO);
+
+                appGoodsDTO.setRemainCount(appGoodsDTO.getRemainCount() - goodsSum);
+                appGoodsDTO.setSaleCount(appGoodsDTO.getSaleCount() + goodsSum);
+                appGoodsService.update(appGoodsDTO);
+
+
             }
             appOrderService.save(appOrderDTO);
 

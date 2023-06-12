@@ -25,7 +25,11 @@
     </resultMap>
     <select id="getExpList" resultType="io.renren.modules.AppOrder.dto.AppOrderDTO">
         select u.phone_num userPhone ,u.nick_name userName,
-        t.goods_name,t.goods_count,t.create_date,t.update_date,t.transaction_id,IF(t.status='WDH','未兑换','已兑换')  'status' from app_order t
+        t.goods_name,t.goods_count,t.create_date,t.update_date,t.transaction_id,
+               IF(t.status='WDH','未兑换','已兑换')  'status',
+        IF(t.send_type='1','自提','送货上门')  'send_type',
+        t.addr
+        from app_order t
         left join app_user u on u.id=t.user_id
         where deleted='0'
         <if test="userName != null and userName.trim() != ''">

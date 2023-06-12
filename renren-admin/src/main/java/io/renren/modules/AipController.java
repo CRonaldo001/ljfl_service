@@ -197,6 +197,12 @@ public class AipController {
                 appScoresDTO.setUrl(appOrderDTO.getUrl());
                 appScoresService.save(appScoresDTO);
 
+                AppGoodsDTO appGoodsDTO = appGoodsService.get(appOrderDTO.getCreator());
+                appGoodsDTO.setRemainCount(appGoodsDTO.getRemainCount() - appOrderDTO.getGoodsCount());
+                appGoodsDTO.setSaleCount(appGoodsDTO.getSaleCount() + appOrderDTO.getGoodsCount());
+                appGoodsService.update(appGoodsDTO);
+
+
 
             }
             //支付成功 给微信发送我已接收通知的响应
